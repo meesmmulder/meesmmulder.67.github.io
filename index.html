@@ -1,1 +1,141 @@
 
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roel 🌈</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(
+                45deg,
+                #ff0080,
+                #7928ff,
+                #00c6ff,
+                #00ff87,
+                #ffe600
+            );
+            background-size: 400% 400%;
+            animation: kleuren 8s ease infinite;
+            font-family: Arial, sans-serif;
+            user-select: none;
+        }
+
+        @keyframes kleuren {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        #roel {
+            font-size: 150px;
+            font-weight: 900;
+            color: white;
+            text-shadow:
+                0 0 10px #fff,
+                0 0 25px #ff00c8,
+                0 0 50px #00eaff,
+                0 0 80px #ffe600;
+            transition: transform 0.15s ease;
+            cursor: pointer;
+        }
+
+        #roel.vasthouden {
+            animation: regenboog 1s linear infinite;
+        }
+
+        @keyframes regenboog {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        .tekst {
+            position: absolute;
+            bottom: 30px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 0 2px 5px #000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="roel">ROEL</div>
+
+    <div class="tekst">
+        Houd ingedrukt 👆
+    </div>
+
+    <script>
+        const roel = document.getElementById("roel");
+
+        let vasthouden = false;
+        let grootte = 1;
+
+        function start() {
+            if (vasthouden) return;
+
+            vasthouden = true;
+            roel.classList.add("vasthouden");
+
+            groeien();
+        }
+
+        function stop() {
+            vasthouden = false;
+            roel.classList.remove("vasthouden");
+
+            grootte = 1;
+            roel.style.transform = "scale(1)";
+        }
+
+        function groeien() {
+            if (!vasthouden) return;
+
+            grootte += 0.015;
+
+            // maximale grootte
+            if (grootte > 4) {
+                grootte = 4;
+            }
+
+            roel.style.transform = `scale(${grootte})`;
+
+            requestAnimationFrame(groeien);
+        }
+
+        // Muis
+        roel.addEventListener("mousedown", start);
+        document.addEventListener("mouseup", stop);
+
+        // Telefoon/tablet
+        roel.addEventListener("touchstart", start);
+        document.addEventListener("touchend", stop);
+    </script>
+
+</body>
+</html>
